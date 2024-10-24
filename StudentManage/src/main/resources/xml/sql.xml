@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE properties SYSTEM "http://java.sun.com/dtd/properties.dtd">
+<properties>
+	<comment>driver.xml file!!!</comment>
+	
+	<!-- 전체 학생 조회 -->
+	<entry key="studentListFullView">
+		SELECT STD_NO,
+			STD_NAME,
+			STD_AGE,
+			STD_GENDER,
+			STD_SCORE
+		FROM TB_STUDENT
+	</entry>
+	
+	<!-- 학생 세부 조회 -->
+	<entry key = "studentDetail">
+		SELECT STD_NO,
+			STD_NAME,
+			STD_AGE,
+			STD_GENDER,
+			STD_SCORE
+		FROM TB_STUDENT
+		WHERE STD_NO = ?
+	</entry>
+	
+</properties>
