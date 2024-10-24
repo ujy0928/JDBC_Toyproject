@@ -33,6 +33,20 @@ public class StudentListServletImpl implements StudentListServlet{
 		
 		return student;
 	}
+
+	@Override
+	public int studentUpdate(Student std) throws Exception {
+		int result = 0;
+		
+		Connection conn = getConnection();
+		
+		result = dao.studentUpdate(conn, std);
+		
+		if(result > 0) commit(conn);
+		else			rollback(conn);
+		
+		return result;
+	}
 	
 	
 }

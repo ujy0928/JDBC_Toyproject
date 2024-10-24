@@ -102,4 +102,32 @@ public class StudentListDAOImpl implements StudentListDAO{
 		
 		return student;
 	}
+
+	@Override
+	public int studentUpdate(Connection conn, Student std) throws Exception {
+		int result = 0;
+		
+		try {
+			String sql = prop.getProperty("studentUpdate");
+			
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, std.getStdName());
+			pstmt.setInt(2, std.getStdAge());
+			pstmt.setString(3, std.getStdGender());
+			pstmt.setString(4, std.getStdScore());
+			pstmt.setInt(5, std.getStdNo());
+			
+			result = pstmt.executeUpdate();
+			
+		} finally {
+			close(pstmt);
+		}
+		return result;
+	}
 }
+
+
+
+
+
+

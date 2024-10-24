@@ -24,4 +24,13 @@
 		WHERE STD_NO = ?
 	</entry>
 	
+	<entry key = "studentUpdate">
+		UPDATE TB_STUDENT
+		SET STD_NAME = ?,
+		    STD_AGE = ?,
+		    STD_GENDER = ?,
+		    STD_SCORE = ?
+		WHERE STD_NO = ?
+	</entry>
+
 </properties>
