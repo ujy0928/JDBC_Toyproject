@@ -14,17 +14,18 @@ import edu.kh.studentList.dto.Student;
 import static edu.kh.studentList.common.JDBCTemplate.*;
 
 public class StudentListDAOImpl implements StudentListDAO{
-	
+	// 필드 
 	private Statement stmt;
 	private PreparedStatement pstmt;
 	private ResultSet rs = null;
 	
-	private Properties prop;
+	private Properties prop; 
 	
-	
+	// 메서드
 	public StudentListDAOImpl() {
 		try {
 			
+			// resources에 있는 sql 파일 경로 로드 
 			String filePath = StudentListDAOImpl.class.
 					getResource("/xml/sql.xml").getPath();
 			
@@ -49,6 +50,7 @@ public class StudentListDAOImpl implements StudentListDAO{
 			
 			rs = stmt.executeQuery(sql);
 
+			// 학생 정보 리스트 생성
 			while(rs.next()) {
 				
 				Student student = Student.builder()
@@ -84,6 +86,7 @@ public class StudentListDAOImpl implements StudentListDAO{
 			
 			rs = pstmt.executeQuery();
 			
+			// 학생 세부정보 객체에 할당
 			if(rs.next()) {
 				student = Student.builder()
 						.stdNo(rs.getInt("STD_NO"))
@@ -117,11 +120,58 @@ public class StudentListDAOImpl implements StudentListDAO{
 			pstmt.setString(4, std.getStdScore());
 			pstmt.setInt(5, std.getStdNo());
 			
+			// 수정된 student객체를 업데이트 
 			result = pstmt.executeUpdate();
 			
 		} finally {
 			close(pstmt);
 		}
+		return result;
+	}
+
+	@Override
+	public int studentDelete(Connection conn, int stdNo) throws Exception {
+		int result = 0;
+		
+		try {
+			String sql = prop.getProperty("studentDelete");
+			
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, stdNo);
+			
+			// 학생 번호로 학생 정보 삭제
+			result = pstmt.executeUpdate();
+			
+			
+		} finally {
+			close(pstmt);
+		}
+		
+		return result;
+	}
+
+	@Override
+	public int studentAdd(Connection conn, Student student) throws Exception {
+		int result = 0;
+		
+		try {
+			
+			String sql = prop.getProperty("studentAdd");
+			
+			pstmt = conn.prepareStatement(sql);
+			//pstmt.setInt(1, student.getStdNo());
+			pstmt.setString(1, student.getStdName());
+			pstmt.setInt(2, student.getStdAge());
+			pstmt.setString(3, student.getStdGender());
+			pstmt.setString(4, student.getStdScore());
+			
+			// 추가 학생 정보 삽입
+			result = pstmt.executeUpdate();
+			
+		} finally {
+			close(pstmt);
+		}
+		
 		return result;
 	}
 }

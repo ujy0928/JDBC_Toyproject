@@ -11,6 +11,7 @@
 			STD_GENDER,
 			STD_SCORE
 		FROM TB_STUDENT
+		ORDER BY STD_NO ASC
 	</entry>
 	
 	<!-- 학생 세부 조회 -->
@@ -24,6 +25,7 @@
 		WHERE STD_NO = ?
 	</entry>
 	
+	<!-- 학생 세부내용 수정 -->
 	<entry key = "studentUpdate">
 		UPDATE TB_STUDENT
 		SET STD_NAME = ?,
@@ -32,5 +34,29 @@
 		    STD_SCORE = ?
 		WHERE STD_NO = ?
 	</entry>
+	
+	<!-- 학생 정보 삭제 -->
+	<entry key = "studentDelete">
+		DELETE
+		FROM TB_STUDENT
+		WHERE STD_NO = ?
+	</entry>
+	
+	<!-- 학생 정보 추가 -->
+	<entry key = "studentAdd">
+		INSERT INTO TB_STUDENT
+		VALUES(STD_NO_SEQ.NEXTVAL, ?, ?, ?, ?)
+	</entry>
 
 </properties>
+
+
+
+
+
+
+
+
+
+
+

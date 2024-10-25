@@ -4,7 +4,7 @@ import java.util.List;
 
 import edu.kh.studentList.dto.Student;
 
-public interface StudentListServlet {
+public interface StudentListService {
 
 	/** 학생 전체 리스트 조회
 	 * @throws Exception
@@ -24,5 +24,18 @@ public interface StudentListServlet {
 	 * @throws Exception
 	 */
 	int studentUpdate(Student std) throws Exception;
+
+	/** 학생 정보 삭제
+	 * @param stdNo
+	 * @return
+	 * @throws Exception
+	 */
+	int studentDelete(int stdNo) throws Exception;
+
+	/** 학생 정보 추가
+	 * @param student
+	 * @return
+	 */
+	int studentAdd(Student student) throws Exception;
 
 }

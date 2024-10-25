@@ -28,4 +28,18 @@ public interface StudentListDAO {
 	 */
 	int studentUpdate(Connection conn, Student std) throws Exception;
 
+	/** 학생 정보 삭제
+	 * @param conn
+	 * @param stdNo
+	 * @return
+	 */
+	int studentDelete(Connection conn, int stdNo) throws Exception;
+
+	/** 학생 정보 추가
+	 * @param conn
+	 * @param student
+	 * @return
+	 */
+	int studentAdd(Connection conn, Student student) throws Exception;
+
 }

@@ -3,8 +3,8 @@ package edu.kh.studentList.controller;
 import java.io.IOException;
 
 import edu.kh.studentList.dto.Student;
-import edu.kh.studentList.service.StudentListServlet;
-import edu.kh.studentList.service.StudentListServletImpl;
+import edu.kh.studentList.service.StudentListService;
+import edu.kh.studentList.service.StudentListServiceImpl;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
@@ -19,19 +19,20 @@ public class UpdateServlet extends HttpServlet {
 		
 		
 		try {
-			int stdNo = Integer.parseInt(req.getParameter("stdNo"));
+			int stdNo = Integer.parseInt(req.getParameter("stdNo")); // 학생 번호
 			
-			StudentListServlet service = new StudentListServletImpl();
+			StudentListService service = new StudentListServiceImpl();
 			
+			// 학생 세부 정보 로드
 			Student student = service.studentDetail(stdNo);
 			
 			if(student == null) {
-				// 메인페이지로 redirect
+				// 조회 실페시 메인페이지로 redirect
 				resp.sendRedirect("/");
 				return;
 			}
 			
-			// request scope에 todo 객체 세팅
+			// request scope에 std 객체 세팅
 			req.setAttribute("std", student);
 			
 			// 요청발송자를 통해 forward
@@ -47,20 +48,22 @@ public class UpdateServlet extends HttpServlet {
 	@Override
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		try {
-			int stdNo = Integer.parseInt(req.getParameter("stdNo"));
-			String stdName = req.getParameter("stdName");
-			int stdAge = Integer.parseInt(req.getParameter("stdAge"));
-			String stdGender = req.getParameter("stdGender");
-			String stdScore = req.getParameter("stdScore");
+			int stdNo = Integer.parseInt(req.getParameter("stdNo")); // 학생 번호
+			String stdName = req.getParameter("stdName"); // 학생 이름
+			int stdAge = Integer.parseInt(req.getParameter("stdAge")); // 학생 나이
+			String stdGender = req.getParameter("stdGender"); // 학생 성별
+			String stdScore = req.getParameter("stdScore"); // 학생 점수
 			
-			StudentListServlet service = new StudentListServletImpl();
-		
+			StudentListService service = new StudentListServiceImpl();
+			
+			// 학생 정보 update를 위해 전달 할 student 객체 생성
 			Student std = new Student(stdNo, stdName, stdAge, stdGender, stdScore);
 			
 			int result = service.studentUpdate(std);
 			String message = null;
 			String url = null;
 
+			// 수정 성공 시 메인페이지로, 실패 시 수정 화면으로 이동
 			if(result > 0) {
 				url = "/";
 				message = "수정 성공!!";
